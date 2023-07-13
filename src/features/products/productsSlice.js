@@ -4,14 +4,16 @@ import { BASE_URL } from "../../utils/constants";
 
 const initialState = {
   list: [],
+//   filtered: [],
+//   related: [],
   isLoading: false,
 };
 
-export const getCategories = createAsyncThunk(
-  "categories/getCategories",
+export const getProducts = createAsyncThunk(
+  "products/getProducts",
   async (_, thunkAPI) => {
     try {
-      const res = await axios.get(`${BASE_URL}/categories`);
+      const res = await axios.get(`${BASE_URL}/products`);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -20,23 +22,23 @@ export const getCategories = createAsyncThunk(
   }
 );
 
-const categoriesSlice = createSlice({
-  name: "categories",
+const productsSlice = createSlice({
+  name: "products",
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(getCategories.pending, (state) => {
+      .addCase(getProducts.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getCategories.fulfilled, (state, { payload }) => {
+      .addCase(getProducts.fulfilled, (state, { payload }) => {
         state.list = payload;
         state.isLoading = false;
       })
-      .addCase(getCategories.rejected, (state) => {
+      .addCase(getProducts.rejected, (state) => {
         state.isLoading = false;
       });
-    // .addCase(getCategories.pending, () => {});
+    // .addCase(getProducts.pending, () => {});
   },
 });
 
-export default categoriesSlice.reducer;
+export default productsSlice.reducer;
