@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useGetProductQuery } from "../../features/api/apiSlice";
-// import { getRelatedProducts } from "../../features/products/productsSlice";
+import { getRelatedProducts } from "../../features/products/productsSlice";
 
 import { ROUTES } from "../../utils/routes";
 
 import Product from "./Product";
-// import Products from "./Products";
+import Products from "./Products";
 
 const SingleProduct = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const SingleProduct = () => {
   useEffect(() => {
     if (!data || !list.length) return;
 
-    // dispatch(getRelatedProducts(data.category.id));
+    dispatch(getRelatedProducts(data.category.id));
   }, [data, dispatch, list.length]);
 
   return !data ? (
@@ -36,7 +36,7 @@ const SingleProduct = () => {
   ) : (
     <>
       <Product {...data} />
-      {/* <Products products={related} amount={5} title="Related products" /> */}
+      <Products products={related} amount={5} title="Related products" />
     </>
   );
 };
