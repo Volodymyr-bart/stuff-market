@@ -31,7 +31,7 @@ const productsSlice = createSlice({
       state.filtered = state.list.filter(({ price }) => price < payload);
     },
     getRelatedProducts: (state, { payload }) => {
-      const list = state.list.filter(({ price }) => price < payload);
+      const list = state.list.filter(({ category: { id } }) => id === payload);
       state.related = shuffle(list);
     },
   },
@@ -48,7 +48,6 @@ const productsSlice = createSlice({
       .addCase(getProducts.rejected, (state) => {
         state.isLoading = false;
       });
-    
   },
 });
 
