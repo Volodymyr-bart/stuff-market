@@ -1,27 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../utils/constants";
-// import axios from "axios";
-// import { BASE_URL } from "../../utils/constants";
-
-// const initialState = {
-//   list: [],
-//   filtered: [],
-//   //   related: [],
-//   isLoading: false,
-// };
-
-// export const getProducts = createAsyncThunk(
-//   "products/getProducts",
-//   async (_, thunkAPI) => {
-//     try {
-//       const res = await axios.get(`${BASE_URL}/products`);
-//       return res.data;
-//     } catch (error) {
-//       console.log(error);
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   }
-// );
+import { buildUrl } from "../../utils/common";
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -32,7 +11,11 @@ export const apiSlice = createApi({
       query: ({ id }) => `/products/${id}`,
       providesTags: ["Product"],
     }),
+    getProducts: builder.query({
+      query: (params) => buildUrl(`/products/`, params),
+      providesTags: ["Products"],
+    }),
   }),
 });
 
-export const { useGetProductQuery } = apiSlice;
+export const { useGetProductQuery, useGetProductsQuery } = apiSlice;
