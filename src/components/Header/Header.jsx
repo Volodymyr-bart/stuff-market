@@ -5,10 +5,17 @@ import LOGO from "./../../images/logo.svg";
 import AVATAR from "./../../images/avatar.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleForm } from "../../features/user/userSlice";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector(({ user }) => user);
+  const [values, setValues] = useState({ name: "GUEST", avatar: AVATAR });
+
+  useEffect(() => {
+    if (!currentUser) return;
+    setValues(currentUser);
+  }, [currentUser]);
 
   const handleClick = () => {
     if (!currentUser) dispatch(toggleForm(true));
@@ -25,8 +32,8 @@ const Header = () => {
         <div className={styles.user} onClick={handleClick}>
           <div
             className={styles.avatar}
-            style={{ backgroundImage: `url(${AVATAR})` }}></div>
-          <div className={styles.username}>GUEST</div>
+            style={{ backgroundImage: `url(${values.avatar})` }}></div>
+          <div className={styles.username}>{values.name}</div>
         </div>
         <form className={styles.form}>
           <div className={styles.icon}>

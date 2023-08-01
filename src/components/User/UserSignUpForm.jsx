@@ -20,6 +20,7 @@ const UserSignupForm = ({ toggleCurrentFormType, closeForm }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Check inputs
     const isNotEmpty = Object.values(values).every((val) => val);
 
     if (!isNotEmpty) return;
