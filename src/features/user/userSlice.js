@@ -41,15 +41,18 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
-// export const getUser = createAsyncThunk("user/getUser", async (_, thunkAPI) => {
-//   try {
-//     const res = await axios.get("/api/user");
-//     return res.data;
-//   } catch (error) {
-//     console.log(error);
-//     return thunkAPI.rejectWithValue(error);
-//   }
-// });
+export const updateUser = createAsyncThunk(
+  "user/updateUser",
+  async (_, thunkAPI) => {
+    try {
+      const res = await axios.get("/api/user");
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const addCurrentUser = (state, { payload }) => {
   state.currentUser = payload;
@@ -82,19 +85,16 @@ const userSlice = createSlice({
     toggleFormType: (state, { payload }) => {
       state.formType = payload;
     },
-    updateUser: (state, { payload }) => {
-      // state.formType = payload;
-    },
   },
 
   extraReducers: (builder) => {
     builder
       .addCase(createUser.fulfilled, addCurrentUser)
-      .addCase(loginUser.fulfilled, addCurrentUser);
+      .addCase(loginUser.fulfilled, addCurrentUser)
+      .addCase(updateUser.fulfilled, addCurrentUser);
   },
 });
 
-export const { addItemToCart, toggleForm, toggleFormType, updateUser } =
-  userSlice.actions;
+export const { addItemToCart, toggleForm, toggleFormType } = userSlice.actions;
 
 export default userSlice.reducer;
